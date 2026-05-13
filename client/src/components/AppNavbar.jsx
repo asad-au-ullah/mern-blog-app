@@ -5,12 +5,12 @@ function AppNavbar({ onWriteClick }) {
         <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
             <Container>
 
-        // Brand / Logo
+         {/* Brand / Logo */}
                 <Navbar.Brand href="#">
                     📰 <strong>ThePost</strong> Blog
                 </Navbar.Brand>
 
-        // Hamburger menu for mobile
+        {/* Hamburger menu for mobile */}
                 <Navbar.Toggle aria-controls="nav-collapse" />
 
                 <Navbar.Collapse id="nav-collapse">
@@ -20,7 +20,7 @@ function AppNavbar({ onWriteClick }) {
                         <Nav.Link href="#">World</Nav.Link>
                     </Nav>
 
-          // Write Post button in Navbar
+          {/* Write Post button in Navbar */}
                     <Button
                         variant="outline-light"
                         size="sm"

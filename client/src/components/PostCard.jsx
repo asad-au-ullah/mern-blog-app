@@ -1,7 +1,7 @@
 import { Card, Badge, Button } from 'react-bootstrap';
 
 const CAT_VARIANTS = {
-    Tech: 'primary', Health: 'success', Science: 'purple',
+    Tech: 'primary', Health: 'success', Science: 'dark',
     Business: 'warning', Sports: 'info', World: 'danger'
 };
 
