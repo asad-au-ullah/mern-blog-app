@@ -7,7 +7,7 @@ import PostForm from './components/PostForm';
 import CategoryFilter from './components/CategoryFilter';
 import './App.css';
 
-const API = '/api/posts';
+const API = import.meta.env.VITE_BACKEND_URL || '';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -23,7 +23,7 @@ function App() {
   const fetchPosts = async () => {
     setLoading(true);
     const params = category !== 'All' ? { category } : {};
-    const res = await axios.get(API, { params });
+    const res = await axios.get(`${API}/api/posts`, { params });
     setPosts(res.data);
     setLoading(false);
   };
@@ -37,7 +37,7 @@ function App() {
     } else {
       params.delete('category');
     }
-    
+
     const newSearch = params.toString() ? `?${params.toString()}` : '';
     if (window.location.search !== newSearch) {
       window.history.pushState(null, '', newSearch || window.location.pathname);
@@ -60,10 +60,10 @@ function App() {
 
   const handleSavePost = async (data) => {
     if (data._id) {
-      await axios.put(`${API}/${data._id}`, data);
+      await axios.put(`${API}/api/posts/${data._id}`, data);
       showAlert('✏️ Article updated successfully!');
     } else {
-      await axios.post(API, data);
+      await axios.post(`${API}/api/posts`, data);
       showAlert('📰 Article published successfully!');
     }
     fetchPosts();
@@ -80,7 +80,7 @@ function App() {
   };
 
   const deletePost = async (id) => {
-    await axios.delete(`${API}/${id}`);
+    await axios.delete(`${API}/api/posts/${id}`);
     fetchPosts();
     showAlert('🗑️ Article deleted', 'danger');
   };
