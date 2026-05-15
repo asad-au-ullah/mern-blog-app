@@ -5,6 +5,7 @@ import AppNavbar from './components/AppNavbar';
 import PostCard from './components/PostCard';
 import PostForm from './components/PostForm';
 import CategoryFilter from './components/CategoryFilter';
+import './App.css';
 
 const API = '/api/posts';
 
@@ -61,10 +62,10 @@ function App() {
   };
 
   return (
-    <>
+    <div className="d-flex flex-column vh-100 overflow-hidden">
       <AppNavbar onWriteClick={handleWriteClick} />
 
-      <Container className="py-4">
+      <Container className="py-4 flex-grow-1 overflow-auto custom-scroll">
 
         {/* Alert message */}
         {alert && (
@@ -99,13 +100,13 @@ function App() {
       <PostForm
         show={showForm}
         onClose={() => {
-            setShowForm(false);
-            setPostToEdit(null);
+          setShowForm(false);
+          setPostToEdit(null);
         }}
         onSubmit={handleSavePost}
         initialData={postToEdit}
       />
-    </>
+    </div>
   );
 }
 
