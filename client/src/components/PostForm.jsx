@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 
-function PostForm({ show, onClose, onSubmit }) {
+function PostForm({ show, onClose, onSubmit, initialData }) {
     const [form, setForm] = useState({
         title: '', content: '', author: '',
         category: 'Tech', emoji: '📰',
     });
+
+    useEffect(() => {
+        if (initialData) {
+            setForm(initialData);
+        } else {
+            setForm({ title: '', content: '', author: '', category: 'Tech', emoji: '📰' });
+        }
+    }, [initialData, show]);
 
     const handleChange = e =>
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,7 +29,7 @@ function PostForm({ show, onClose, onSubmit }) {
         <Modal show={show} onHide={onClose} size="lg" centered>
 
             <Modal.Header closeButton>
-                <Modal.Title>✍️ Write a New Article</Modal.Title>
+                <Modal.Title>{initialData ? '✏️ Edit Article' : '✍️ Write a New Article'}</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
@@ -81,7 +89,7 @@ function PostForm({ show, onClose, onSubmit }) {
 
             <Modal.Footer>
                 <Button variant="secondary" onClick={onClose}>Cancel</Button>
-                <Button variant="dark" onClick={handleSubmit}>📰 Publish</Button>
+                <Button variant="dark" onClick={handleSubmit}>{initialData ? '✏️ Update' : '📰 Publish'}</Button>
             </Modal.Footer>
 
         </Modal>

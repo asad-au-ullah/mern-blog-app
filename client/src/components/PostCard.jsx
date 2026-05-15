@@ -5,7 +5,7 @@ const CAT_VARIANTS = {
     Business: 'warning', Sports: 'info', World: 'danger'
 };
 
-function PostCard({ post, onDelete }) {
+function PostCard({ post, onDelete, onEdit }) {
     const excerpt = post.content.length > 150
         ? post.content.slice(0, 150) + '…'
         : post.content;
@@ -27,15 +27,28 @@ function PostCard({ post, onDelete }) {
                 <Card.Text className="text-muted">{excerpt}</Card.Text>
             </Card.Body>
 
-            <Card.Footer className="d-flex justify-content-between align-items-center">
-                <small>✍️ {post.author}</small>
-                <Button
-                    variant="outline-danger"
-                    size="sm"
-                    onClick={() => onDelete(post._id)}
-                >
-                    🗑️ Delete
-                </Button>
+            <Card.Footer className="d-flex justify-content-between align-items-center flex-nowrap">
+                <div className="text-truncate me-2" title={post.author}>
+                    <small>✍️ {post.author}</small>
+                </div>
+                <div className="d-flex flex-shrink-0">
+                    <Button
+                        variant="outline-primary"
+                        size="sm"
+                        className="me-2 text-nowrap"
+                        onClick={() => onEdit(post)}
+                    >
+                        ✏️ Edit
+                    </Button>
+                    <Button
+                        variant="outline-danger"
+                        size="sm"
+                        className="text-nowrap"
+                        onClick={() => onDelete(post._id)}
+                    >
+                        🗑️ Delete
+                    </Button>
+                </div>
             </Card.Footer>
 
         </Card>

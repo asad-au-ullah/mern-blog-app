@@ -12,6 +12,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [postToEdit, setPostToEdit] = useState(null);
   const [category, setCategory] = useState('All');
   const [alert, setAlert] = useState(null); // { msg, variant }
 
@@ -32,10 +33,25 @@ function App() {
     setTimeout(() => setAlert(null), 3000);
   };
 
-  const addPost = async (data) => {
-    await axios.post(API, data);
+  const handleSavePost = async (data) => {
+    if (data._id) {
+      await axios.put(`${API}/${data._id}`, data);
+      showAlert('✏️ Article updated successfully!');
+    } else {
+      await axios.post(API, data);
+      showAlert('📰 Article published successfully!');
+    }
     fetchPosts();
-    showAlert('📰 Article published successfully!');
+  };
+
+  const handleEditClick = (post) => {
+    setPostToEdit(post);
+    setShowForm(true);
+  };
+
+  const handleWriteClick = () => {
+    setPostToEdit(null);
+    setShowForm(true);
   };
 
   const deletePost = async (id) => {
@@ -46,7 +62,7 @@ function App() {
 
   return (
     <>
-      <AppNavbar onWriteClick={() => setShowForm(true)} />
+      <AppNavbar onWriteClick={handleWriteClick} />
 
       <Container className="py-4">
 
@@ -72,7 +88,7 @@ function App() {
           <Row xs="1" md="2" lg="3" className="g-4">
             {posts.map(post => (
               <Col key={post._id}>
-                <PostCard post={post} onDelete={deletePost} />
+                <PostCard post={post} onDelete={deletePost} onEdit={handleEditClick} />
               </Col>
             ))}
           </Row>
@@ -82,8 +98,12 @@ function App() {
 
       <PostForm
         show={showForm}
-        onClose={() => setShowForm(false)}
-        onSubmit={addPost}
+        onClose={() => {
+            setShowForm(false);
+            setPostToEdit(null);
+        }}
+        onSubmit={handleSavePost}
+        initialData={postToEdit}
       />
     </>
   );
