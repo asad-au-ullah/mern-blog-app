@@ -50,24 +50,6 @@ const createPost = async (req, res) => {
 
 //#endregion
 
-//#region PUT
-
-const updatePost = async (req, res) => {
-    try {
-        const updatedPost = await Post.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true, runValidators: true }
-        );
-        if (!updatedPost) return res.status(404).json({ message: 'Post not found' });
-        res.json(updatedPost);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-}
-
-//#endregion
-
 //#region DELETE
 
 const deletePost = async (req, res) => {
@@ -81,4 +63,4 @@ const deletePost = async (req, res) => {
 
 //#endregion
 
-export { getPosts, getPost, createPost, updatePost, deletePost };
+export { getPosts, getPost, createPost, deletePost };

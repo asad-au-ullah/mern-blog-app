@@ -5,7 +5,7 @@ const CAT_VARIANTS = {
     Business: 'warning', Sports: 'info', World: 'danger'
 };
 
-function PostCard({ post, onDelete, onEdit }) {
+function PostCard({ post, onDelete }) {
     const excerpt = post.content.length > 150
         ? post.content.slice(0, 150) + '…'
         : post.content;
@@ -32,14 +32,6 @@ function PostCard({ post, onDelete, onEdit }) {
                     <small>✍️ {post.author}</small>
                 </div>
                 <div className="d-flex flex-shrink-0">
-                    <Button
-                        variant="outline-primary"
-                        size="sm"
-                        className="me-2 text-nowrap"
-                        onClick={() => onEdit(post)}
-                    >
-                        ✏️ Edit
-                    </Button>
                     <Button
                         variant="outline-danger"
                         size="sm"

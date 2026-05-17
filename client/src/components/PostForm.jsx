@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 
-function PostForm({ show, onClose, onSubmit, initialData }) {
+function PostForm({ show, onClose, onSubmit }) {
     const [form, setForm] = useState({
         title: '', content: '', author: '',
         category: 'Tech', emoji: '📰',
     });
 
     useEffect(() => {
-        if (initialData) {
-            setForm(initialData);
-        } else {
-            setForm({ title: '', content: '', author: '', category: 'Tech', emoji: '📰' });
-        }
-    }, [initialData, show]);
+        setForm({ title: '', content: '', author: '', category: 'Tech', emoji: '📰' });
+    }, [show]);
 
     const handleChange = e =>
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,7 +25,7 @@ function PostForm({ show, onClose, onSubmit, initialData }) {
         <Modal show={show} onHide={onClose} size="lg" centered>
 
             <Modal.Header closeButton>
-                <Modal.Title>{initialData ? '✏️ Edit Article' : '✍️ Write a New Article'}</Modal.Title>
+                <Modal.Title>✍️ Write a New Article</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
@@ -89,7 +85,7 @@ function PostForm({ show, onClose, onSubmit, initialData }) {
 
             <Modal.Footer>
                 <Button variant="secondary" onClick={onClose}>Cancel</Button>
-                <Button variant="dark" onClick={handleSubmit}>{initialData ? '✏️ Update' : '📰 Publish'}</Button>
+                <Button variant="dark" onClick={handleSubmit}>📰 Publish</Button>
             </Modal.Footer>
 
         </Modal>
